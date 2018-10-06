@@ -8,7 +8,7 @@ import { configureStore } from 'store/configure';
 import Routes from './Routes';
 
 const initialState = window && (window as any).__PRELOADED_STATE__;
-const { store, persistor } = configureStore(initialState);
+const { store, /* persistor */ } = configureStore(initialState);
 
 const App = hot(module)(() => (
   <Provider store={store}>
