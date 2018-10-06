@@ -2,6 +2,10 @@ import React from 'react';
 import { Button, Input } from 'antd';
 import './style.less';
 
+interface Props {
+  onCreatePassword(password: string): void;
+}
+
 interface State {
   password1: string;
   password2: string;
@@ -9,7 +13,7 @@ interface State {
   strength: number;
 }
 
-export default class CreatePassword extends React.Component<any, State> {
+export default class CreatePassword extends React.Component<Props, State> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -19,6 +23,7 @@ export default class CreatePassword extends React.Component<any, State> {
       strength: 0,
     };
   }
+
   handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.currentTarget;
     const setPass = (n: string, nx: string, v: string, d: string) => {
@@ -43,9 +48,15 @@ export default class CreatePassword extends React.Component<any, State> {
     }
     this.setState({ password1, password2, isReady, strength });
   };
+
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    this.props.onCreatePassword(this.state.password1);
+  } 
+
   render() {
     return (
-      <div className="CreatePassword">
+      <form className="CreatePassword" onSubmit={this.handleSubmit}>
         <h2 className="CreatePassword-title">Create a Password</h2>
         <div className="CreatePassword-label">Password (min 8 chars)</div>
         <Input
@@ -80,7 +91,12 @@ export default class CreatePassword extends React.Component<any, State> {
           </div>
         </div>
         <div className="CreatePassword-continue">
-          <Button size="large" type="primary" disabled={!this.state.isReady}>
+          <Button
+            size="large"
+            type="primary"
+            htmlType="submit"
+            disabled={!this.state.isReady}
+          >
             Continue
           </Button>
         </div>
@@ -89,7 +105,7 @@ export default class CreatePassword extends React.Component<any, State> {
           to unlocking when you want to check your accounts. Make sure you back this up,
           it cannot be recovered for you.
         </div>
-      </div>
+      </form>
     );
   }
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
+import CreatePassword from 'components/CreatePassword';
 import { cryptoActions } from 'modules/crypto';
 import { AppState } from 'store/reducers';
 
@@ -15,17 +16,7 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 
-interface State {
-  password: string;
-  passwordConfirm: string;
-}
-
-class OnboardingPage extends React.Component<Props, State> {
-  state: State = {
-    password: '',
-    passwordConfirm: '',
-  };
-
+class OnboardingPage extends React.Component<Props> {
   componentDidMount() {
     this.props.generateSalt();
   }
@@ -37,45 +28,8 @@ class OnboardingPage extends React.Component<Props, State> {
   }
 
   render() {
-    const { password, passwordConfirm } = this.state;
-    return (
-      <>
-        <h1>Onboarding</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Password
-            <input
-              name="password"
-              value={password}
-              onChange={this.handleChange}
-            />
-          </label>
-          <label>
-            Confirm password
-            <input
-              name="passwordConfirm"
-              value={passwordConfirm}
-              onChange={this.handleChange}
-            />
-          </label>
-          <button>Continue</button>
-        </form>
-      </>
-    );
+    return <CreatePassword onCreatePassword={this.props.setPassword} />;
   }
-
-  private handleChange = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = ev.currentTarget;
-    this.setState({ [name]: value } as any);
-  }
-
-  private handleSubmit = (ev: React.FormEvent<HTMLFormElement>) => {
-    ev.preventDefault();
-    const { password, passwordConfirm } = this.state;
-    if (password && password === passwordConfirm) {
-      this.props.setPassword(password);
-    }
-  };
 }
 
 const ConnectedOnboardingPage = connect<StateProps, DispatchProps, {}, AppState>(
