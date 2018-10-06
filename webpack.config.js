@@ -32,6 +32,16 @@ const lessLoaderClient = {
   exclude: [/node_modules/],
   use: [...cssLoaderClient.use, lessLoader],
 };
+const externalLessLoaderClient = {
+  test: /\.less$/,
+  include: [/node_modules/],
+  use: [
+    isDev && 'style-loader',
+    !isDev && MiniCssExtractPlugin.loader,
+    'css-loader',
+    lessLoader,
+  ].filter(Boolean),
+};
 
 const svgLoaderClient = {
   test: /\.svg$/,
@@ -69,7 +79,6 @@ module.exports = {
     content_script: path.join(__dirname, 'src/content_script/index.ts'),
     options: path.join(__dirname, 'src/options/index.tsx'),
     popup: path.join(__dirname, 'src/popup/index.tsx'),
-    // bundle: [path.join(paths.srcClient, 'index.tsx')],
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -89,7 +98,7 @@ module.exports = {
                 'react-hot-loader/babel',
                 '@babel/plugin-proposal-object-rest-spread',
                 '@babel/plugin-proposal-class-properties',
-                ['import', { libraryName: 'antd', style: false }],
+                ['import', { libraryName: 'antd', style: true }],
               ],
               presets: ['@babel/react', ['@babel/env', { useBuiltIns: 'entry' }]],
             },
@@ -101,6 +110,7 @@ module.exports = {
         ],
       },
       lessLoaderClient,
+      externalLessLoaderClient,
       cssLoaderClient,
       svgLoaderClient,
       urlLoaderClient,
@@ -108,10 +118,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.mjs', '.json'],
-    modules: [
-      srcApp,
-      path.join(__dirname, 'node_modules'),
-    ],
+    modules: [srcApp, path.join(__dirname, 'node_modules')],
     alias: {
       api: `${srcApp}/api`,
       components: `${srcApp}/components`,
