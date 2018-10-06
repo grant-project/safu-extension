@@ -1,10 +1,14 @@
 import React from 'react';
-import { Button, Input } from 'antd';
-import { Link } from 'react-router-dom';
-import Logo from 'static/safu-light.svg';
+import { Button } from 'antd';
+import Logo from 'static/images/safu-logo.svg';
 import './style.less';
 
-export default class Splash extends React.Component {
+interface Props {
+  handleContinue(): void;
+  handleRestore(): void;
+}
+
+export default class Splash extends React.Component<Props> {
   render() {
     return (
       <div className="Splash">
@@ -16,14 +20,12 @@ export default class Splash extends React.Component {
           <li>Securely store private keys</li>
         </ul>
         <div className="Splash-controls">
-          <Link to="/">
-            <Button size="large" type="primary">
-              Get started
-            </Button>
-          </Link>
-          <Link className="Splash-controls-restore" to="/">
+          <Button size="large" type="primary" onClick={this.props.handleContinue}>
+            Get started
+          </Button>
+          <a className="Splash-controls-restore" onClick={this.props.handleRestore}>
             Restore Safu backup
-          </Link>
+          </a>
         </div>
       </div>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
 import CreatePassword from 'components/CreatePassword';
+import Splash from 'components/Splash';
 import { cryptoActions } from 'modules/crypto';
 import { AppState } from 'store/reducers';
 
@@ -16,7 +17,21 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 
-class OnboardingPage extends React.Component<Props> {
+enum STEP {
+  SPLASH = 'SPLASH',
+  PASSWORD = 'PASSWORD',
+  RESTORE = 'RESTORE',
+};
+
+interface State {
+  step: STEP;
+}
+
+class OnboardingPage extends React.Component<Props, State> {
+  state: State = {
+    step: STEP.SPLASH,
+  };
+
   componentDidMount() {
     this.props.generateSalt();
   }
@@ -28,8 +43,25 @@ class OnboardingPage extends React.Component<Props> {
   }
 
   render() {
-    return <CreatePassword onCreatePassword={this.props.setPassword} />;
+    const { step } = this.state;
+    switch(step) {
+      case STEP.SPLASH:
+        return (
+          <Splash
+            handleContinue={() => this.changeStep(STEP.PASSWORD)}
+            handleRestore={() => this.changeStep(STEP.RESTORE)}
+          />
+        );
+      case STEP.PASSWORD:
+        return <CreatePassword onCreatePassword={this.props.setPassword} />;
+      case STEP.RESTORE:
+        return <h1>Implement restore</h1>;
+    }
   }
+
+  private changeStep = (step: STEP) => {
+    this.setState({ step });
+  };
 }
 
 const ConnectedOnboardingPage = connect<StateProps, DispatchProps, {}, AppState>(
