@@ -10,6 +10,8 @@ const autoprefixer = require('autoprefixer');
 
 const isDev = process.env.NODE_ENV !== 'production';
 
+const srcApp = path.join(__dirname, 'src/app');
+
 const cssLoaderClient = {
   test: /\.css$/,
   exclude: [/node_modules/],
@@ -104,7 +106,26 @@ module.exports = {
       urlLoaderClient,
     ],
   },
-  resolve: { extensions: ['.ts', '.tsx', '.js', '.mjs', '.json'] },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.mjs', '.json'],
+    modules: [
+      srcApp,
+      path.join(__dirname, 'node_modules'),
+    ],
+    alias: {
+      api: `${srcApp}/api`,
+      components: `${srcApp}/components`,
+      lib: `${srcApp}/lib`,
+      modules: `${srcApp}/modules`,
+      pages: `${srcApp}/pages`,
+      static: `${srcApp}/static`,
+      store: `${srcApp}/store`,
+      styles: `${srcApp}/styles`,
+      typings: `${srcApp}/typings`,
+      utils: `${srcApp}/utils`,
+      web3interact: `${srcApp}/web3interact`,
+    },
+  },
   plugins: [
     new MiniCssExtractPlugin({
       filename:
