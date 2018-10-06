@@ -1,0 +1,101 @@
+.CreatePassword {
+  margin: 1rem 1.5rem;
+  position: relative;
+  height: 100%;
+
+  &-title {
+    font-size: 1.5rem;
+  }
+
+  &-label {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
+
+  &-input {
+    width: 100%;
+    margin-bottom: 0.8rem;
+  }
+
+  &-passtr {
+    &-bar {
+      display: flex;
+      margin: 0.2rem 0;
+
+      & > div {
+        flex-grow: 1;
+        height: 8px;
+
+        &:first-child {
+          border-radius: 4px 0 0 4px;
+        }
+
+        &:last-child {
+          border-radius: 0 4px 4px 0;
+        }
+      }
+
+      & > div + div {
+        margin-left: 0.2rem;
+      }
+    }
+
+    &-text {
+      text-align: center;
+      margin: 0.5rem 0;
+    }
+
+    &.is-str0 {
+      .CreatePassword-passtr-bar > div {
+        background: #ededed;
+      }
+      .CreatePassword-passtr-text {
+        color: transparent;
+      }
+    }
+
+    &.is-str1 {
+      .CreatePassword-passtr-bar-a {
+        background: #e94a34;
+      }
+      .CreatePassword-passtr-text {
+        color: #e94a34;
+      }
+    }
+
+    &.is-str2 {
+      .CreatePassword-passtr-bar-a,
+      .CreatePassword-passtr-bar-b {
+        background: #e87d01;
+      }
+      .CreatePassword-passtr-text {
+        color: #e87d01;
+      }
+    }
+
+    &.is-str3 {
+      .CreatePassword-passtr-bar-a,
+      .CreatePassword-passtr-bar-b,
+      .CreatePassword-passtr-bar-c {
+        background: #1fcd6d;
+      }
+      .CreatePassword-passtr-text {
+        color: #1fcd6d;
+      }
+    }
+  }
+
+  &-continue {
+    margin: 2rem;
+    text-align: center;
+  }
+
+  &-disclaimer {
+    position: absolute;
+    color: #848484;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    line-height: 1.2rem;
+  }
+}
