@@ -29,8 +29,7 @@
       "utils/*": ["./src/app/utils/*"],
     }
   },
-  "include": ["src", "webpack.config.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src", "webpack.config.ts"]
 
   // {
   //   "compileOnSave": false,
