@@ -3,7 +3,7 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
-// import { PersistGate } from 'redux-persist/integration/react';
+import SyncGate from 'components/SyncGate';
 import { configureStore } from 'store/configure';
 import Routes from './Routes';
 
@@ -12,11 +12,11 @@ const { store, /* persistor */ } = configureStore(initialState);
 
 const App = hot(module)(() => (
   <Provider store={store}>
-    {/* <PersistGate persistor={persistor}> */}
+    <SyncGate>
       <MemoryRouter>
         <Routes />
       </MemoryRouter>
-    {/* </PersistGate> */}
+    </SyncGate>
   </Provider>
 ));
 

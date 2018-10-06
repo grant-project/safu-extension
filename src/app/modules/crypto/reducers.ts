@@ -3,11 +3,15 @@ import types from './types';
 export interface CryptoState {
   salt: null | string;
   hasSetPassword: boolean;
+  password: null | string;
+  testCipher: null | string;
 }
 
 export const INITIAL_STATE: CryptoState = {
   salt: null,
   hasSetPassword: false,
+  password: null,
+  testCipher: null,
 };
 
 export default function cryptoReducers(
@@ -25,6 +29,25 @@ export default function cryptoReducers(
       return {
         ...state,
         hasSetPassword: true,
+        password: action.payload,
+      };
+    
+    case types.SET_TEST_CIPHER:
+      return {
+        ...state,
+        testCipher: action.payload,
+      };
+    
+    case types.ENTER_PASSWORD:
+      return {
+        ...state,
+        password: action.payload,
+      };
+
+    case types.SET_SYNCED_CRYPTO_STATE:
+      return {
+        ...state,
+        ...action.payload,
       };
   }
 

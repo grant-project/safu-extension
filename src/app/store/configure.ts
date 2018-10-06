@@ -1,9 +1,9 @@
 import { Store, createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'remote-redux-devtools';
 // import { persistStore } from 'redux-persist';
 import rootReducer, { AppState, combineInitialState } from './reducers';
-// import rootSaga from './sagas';
+import rootSaga from './sagas';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -26,7 +26,7 @@ export function configureStore(initialState: Partial<AppState> = combineInitialS
   );
   // const persistor = persistStore(store);
 
-  // sagaMiddleware.run(rootSaga);
+  sagaMiddleware.run(rootSaga);
 
   if (process.env.NODE_ENV === 'development') {
     if (module.hot) {
