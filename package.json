@@ -84,6 +84,7 @@
     "font-awesome": "^4.7.0",
     "fork-ts-checker-webpack-plugin": "^0.4.2",
     "fs-extra": "^7.0.0",
+    "ethersjs": "ethers-io/ethers.js.git#typescript",
     "http-proxy-middleware": "^0.18.0",
     "husky": "^1.0.0-rc.8",
     "js-cookie": "^2.2.0",
