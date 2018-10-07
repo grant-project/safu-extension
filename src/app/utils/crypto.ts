@@ -9,6 +9,7 @@ import {
 import { setSyncedCryptoState } from 'modules/crypto/actions';
 import { AppState } from 'store/reducers';
 import cryptoTypes from 'modules/crypto/types';
+import { Dispatch } from 'redux';
 
 export const TEST_CIPHER_DATA = 'Howdy partner!';
 
@@ -40,7 +41,7 @@ export const syncConfigs: Array<SyncConfig<any>> = [
     selector: selectSyncedCryptoState,
     action: setSyncedCryptoState,
     // TODO: Add triggers for when they reset account, import account
-    triggerActions: [cryptoTypes.SET_PASSWORD],
+    triggerActions: [cryptoTypes.SET_PASSWORD, 'BACKUP_RESTORED'],
   },
   {
     key: 'addresses',
@@ -48,7 +49,7 @@ export const syncConfigs: Array<SyncConfig<any>> = [
     selector: selectAddresses,
     action: setAddresses,
     // TODO: Add triggers for when they add, remove addresses
-    triggerActions: [],
+    triggerActions: ['BACKUP_RESTORED'],
   },
 ];
 
@@ -65,4 +66,23 @@ export function generateBackupData(state: AppState) {
     a[sc.key] = data;
     return a;
   }, {});
+}
+
+export function injectBackupData(
+  data: string,
+  dispatch: Dispatch,
+  password: string,
+  salt: string,
+) {
+  const obj = JSON.parse(data);
+  syncConfigs.forEach(sc => {
+    if (obj[sc.key]) {
+      let value = obj[sc.key];
+      if (sc.encrypted) {
+        value = decryptData(value, password, salt);
+      }
+      dispatch(sc.action(value));
+      dispatch({ type: 'BACKUP_RESTORED' });
+    }
+  });
 }
