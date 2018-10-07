@@ -7,15 +7,18 @@ import AddressForm from 'components/AddressForm';
 import Header from 'components/Header';
 import { AddressConfig } from 'modules/addresses/types';
 import { addressesActions } from 'modules/addresses';
+import { getBalancesRequested } from 'modules/balances/actions';
 import { AppState } from 'store/reducers';
 import './addresses.less';
 
 interface StateProps {
   addresses: AppState['addresses']['addresses'];
+  balances: AppState['balances'];
 }
 
 interface DispatchProps {
   removeAddress: typeof addressesActions['removeAddress'];
+  getBalancesRequested: typeof getBalancesRequested;
 }
 
 type Props = StateProps & DispatchProps;
@@ -33,10 +36,15 @@ class AddressesPage extends React.Component<Props, State> {
     isEditingAddress: false,
   };
 
+  componentDidMount() {
+    this.props.getBalancesRequested();
+  }
+
   render() {
-    const { addresses } = this.props;
+    const { addresses, balances } = this.props;
     const { activeAddress, isAddingAddress, isEditingAddress } = this.state;
   
+    console.log(balances);
     const isDrawerOpen = activeAddress || isAddingAddress;
     let drawerTitle;
     let drawerContent;
@@ -54,6 +62,7 @@ class AddressesPage extends React.Component<Props, State> {
       drawerContent = (
         <AddressDetails
           address={activeAddress}
+          balances={balances[activeAddress.address]}
           onEdit={this.toggleEdit}
           onDelete={this.handleDelete}
         />
@@ -65,6 +74,7 @@ class AddressesPage extends React.Component<Props, State> {
         <Header />
         <AddressList
           addresses={addresses}
+          balances={balances}
           onClickAddress={this.setActiveAddress}
         />
         <Drawer
@@ -113,8 +123,10 @@ class AddressesPage extends React.Component<Props, State> {
 export default connect<StateProps, DispatchProps, {}, AppState>(
   state => ({
     addresses: state.addresses.addresses,
+    balances: state.balances,
   }),
   {
     removeAddress: addressesActions.removeAddress,
+    getBalancesRequested,
   }
 )(AddressesPage);

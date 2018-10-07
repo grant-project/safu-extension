@@ -1,3 +1,5 @@
+import BN from 'bn.js';
+
 export enum BALANCES {
   REQUESTED = 'REQUESTED',
   SUCCEEDED = 'SUCCEEDED',
@@ -7,7 +9,7 @@ export enum BALANCES {
 export interface TokenWithBalance {
   symbol: string;
   address: string;
-  balance: string;
+  balance: BN;
   decimals: number;
 }
 

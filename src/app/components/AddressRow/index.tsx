@@ -1,18 +1,19 @@
 import React from 'react';
 import Identicon from 'components/Identicon';
+import UnitDisplay from 'components/UnitDisplay';
 import { AddressConfig } from 'modules/addresses/types';
+import { TokenMap } from 'modules/balances/types';
 import './style.less';
 
 interface Props {
   address: AddressConfig;
+  balances?: TokenMap;
   onClick?(address: AddressConfig): void;
 }
 
 export default class AddressRow extends React.Component<Props> {
-  private randomBalance = (Math.random() * 10).toFixed(3);
-
   render() {
-    const { address } = this.props;
+    const { address, balances } = this.props;
     return (
       <div className="AddressRow" onClick={this.handleClick}>
         <div className="AddressRow-avatar">
@@ -30,7 +31,14 @@ export default class AddressRow extends React.Component<Props> {
         </div>
         <div className="AddressRow-balances">
           <div className="AddressRow-balances-balance">
-            {this.randomBalance} ETH
+            
+            {balances && balances.ETH &&
+              <UnitDisplay
+                value={balances.ETH.balance}
+                displayShortBalance={3}
+                symbol="ETH"
+              />
+            }
           </div>
         </div>
       </div>

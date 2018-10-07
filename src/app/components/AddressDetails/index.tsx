@@ -1,19 +1,23 @@
 import React from 'react';
 import { Button, Dropdown, Menu, Icon, Tabs } from 'antd';
 import Identicon from 'components/Identicon';
+import UnitDisplay from 'components/UnitDisplay';
 import { SOURCE_UI } from 'utils/ui';
 import { AddressConfig, AddressSource } from 'modules/addresses/types';
+import { TokenMap } from 'modules/balances/types';
 import MenuIcon from 'static/images/menu.svg';
 import './style.less';
 
 interface Props {
   address: AddressConfig;
+  balances?: TokenMap;
   onEdit(): void;
   onDelete(address: AddressConfig): void;
 }
 
 export default class AddressDetails extends React.Component<Props> {
   render() {
+    const { balances } = this.props;
     const { address, label, source } = this.props.address;
     const menu = (
       <Menu>
@@ -65,7 +69,13 @@ export default class AddressDetails extends React.Component<Props> {
         </div>
 
         <Tabs className="AddressDetails-tabs" defaultActiveKey="tokens">
-          <Tabs.TabPane tab="Token Balances" key="tokens">Todo: Tokens</Tabs.TabPane>
+          <Tabs.TabPane tab="Token Balances" key="tokens">
+            {balances && Object.values(balances).map(b => (
+              <div key={b.symbol}>
+                <UnitDisplay value={b.balance} symbol={b.symbol} displayShortBalance={4} />
+              </div>
+            ))}
+          </Tabs.TabPane>
           <Tabs.TabPane tab="Transactions" key="transactions">Todo: Transactions</Tabs.TabPane>
         </Tabs>
 

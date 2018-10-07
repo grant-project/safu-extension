@@ -15,5 +15,6 @@
     "storage",
     "<all_urls>"
   ],
-  "web_accessible_resources": [ "*.mp3" ]
+  "web_accessible_resources": [ "*.mp3" ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval';"
 }

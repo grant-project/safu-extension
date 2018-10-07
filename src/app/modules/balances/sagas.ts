@@ -2,9 +2,10 @@ import { SagaIterator } from 'redux-saga';
 import { takeLatest, put, select, apply } from 'redux-saga/effects';
 import { BALANCES, TokenWithBalance, TokenMap, BalanceMap } from './types';
 import { getAllAddresses } from 'modules/addresses/selectors';
-import { abi, address as contractAddress } from './getBalances.abi.json';
-import tokensJson from './tokens.json';
-import ethers from 'ethers';
+const { abi, address : contractAddress } = require('./getBalances.abi.json');
+const tokensJson = require('./tokens.json');
+import BN from 'bn.js'
+import Web3 from 'web3';
 import { getBalancesSucceeded, getBalancesFailed } from 'modules/balances/actions';
 
 type ExtPromise<T> = T extends Promise<infer U> ? U : T;
@@ -13,15 +14,15 @@ interface BalanceContract {
   balances(
     userAddresses: string[],
     tokenAddress: string[],
-  ): Promise<ethers.types.BigNumber[]>;
+  ): Promise<BN[]>;
 }
 
-const provider = ethers.providers.getDefaultProvider();
-const balanceContract: ethers.Contract & BalanceContract = new ethers.Contract(
-  contractAddress,
+const web3 = new Web3(new Web3.providers.HttpProvider('https://api.mycryptoapi.com/eth'))
+const balanceContract = new web3.eth.Contract(
   abi,
-  provider,
-);
+  contractAddress,
+) as any;
+
 
 function hydrateBalancesPerAddress(
   addressesLen: number,
@@ -39,8 +40,10 @@ function hydrateBalancesPerAddress(
       //         uint addrIdx = j + tokens.length * i;
 
       const flatIdx = j + tokens.length * i;
-      const balance = result[flatIdx];
+      const balance = new BN(result[flatIdx]);
 
+
+      console.log(balance);
       if (!balance.isZero()) {
         const token = tokens[j];
 
@@ -63,7 +66,7 @@ function hydrateBalancesPerAddress(
 function reduceTokensToMap(tokens: TokenWithBalance[]): TokenMap {
   const map: TokenMap = {};
   for (const token of tokens) {
-    map[token.address] = token;
+    map[token.symbol] = token;
   }
   return map;
 }
@@ -83,10 +86,11 @@ export function* fetchBalances(): SagaIterator {
   const addresses: ReturnType<typeof getAllAddresses> = yield select(getAllAddresses);
   const tokenAddresses = tokensJson.map(t => t.address);
   try {
+    console.log(balanceContract);
+    const method = balanceContract.methods.balances(addresses, tokenAddresses);
     const res: ExtPromise<ReturnType<BalanceContract['balances']>> = yield apply(
-      balanceContract,
-      balanceContract.balances,
-      [addresses, tokenAddresses],
+      method,
+      method.call ,
     );
 
     const balancesByAddress = hydrateBalancesPerAddress(
