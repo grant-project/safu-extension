@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Input } from 'antd';
+import { Button, Input, Icon } from 'antd';
 import './style.less';
 
 interface Props {
@@ -43,7 +43,7 @@ export default class CreatePassword extends React.Component<Props, State> {
       strength = 1;
     } else if (password2.length < 8) {
       strength = 2;
-    } else if (isReady && password2.length >= 8) {
+    } else if (password2.length >= 8) {
       strength = 3;
     }
     this.setState({ password1, password2, isReady, strength });
@@ -52,7 +52,7 @@ export default class CreatePassword extends React.Component<Props, State> {
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.props.onCreatePassword(this.state.password1);
-  } 
+  };
 
   render() {
     return (
@@ -75,6 +75,15 @@ export default class CreatePassword extends React.Component<Props, State> {
           className="CreatePassword-input"
           size="large"
           type="password"
+          suffix={
+            this.state.password2.length > 0 ? (
+              this.state.isReady ? (
+                <Icon className="CreatePassword-check" type="check" />
+              ) : (
+                <Icon className="CreatePassword-close" type="close" />
+              )
+            ) : null
+          }
         />
         <div className={`CreatePassword-passtr is-str${this.state.strength}`}>
           <div className="CreatePassword-passtr-bar">

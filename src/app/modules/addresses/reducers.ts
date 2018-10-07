@@ -32,14 +32,14 @@ export default function addressesReducer(
       return {
         ...state,
         addresses: state.addresses
-          .filter(a => a.address !== action.payload),
+          .filter(a => a.address.toLowerCase() !== action.payload.toLowerCase()),
       };
     
     case types.UPDATE_ADDRESS:
       return {
         ...state,
         addresses: state.addresses.map(a => {
-          if (a.address === action.payload.oldAddress) {
+          if (a.address.toLowerCase() === action.payload.oldAddress.toLowerCase()) {
             return action.payload.newConfig;
           }
           return a;
