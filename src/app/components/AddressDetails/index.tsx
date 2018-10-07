@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Dropdown, Menu, Icon, Tabs, message} from 'antd';
+import { Button, Dropdown, Menu, Icon, Tabs, Modal, message } from 'antd';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import QRCode from 'qrcode.react';
 import Identicon from 'components/Identicon';
 import TokenRow from './TokenRow';
 import { SOURCE_UI } from 'utils/ui';
@@ -16,10 +17,20 @@ interface Props {
   onDelete(address: AddressConfig): void;
 }
 
-export default class AddressDetails extends React.Component<Props> {
+interface State {
+  isQrShowing: boolean;
+}
+
+export default class AddressDetails extends React.Component<Props, State> {
+  state: State = {
+    isQrShowing: false,
+  };
+
   render() {
     const { balances } = this.props;
     const { address, label, source, backup } = this.props.address;
+    const { isQrShowing } = this.state;
+
     const menu = (
       <Menu>
         {backup &&
@@ -69,6 +80,7 @@ export default class AddressDetails extends React.Component<Props> {
           <Button
             className="AddressDetails-actions-button"
             type="ghost"
+            onClick={this.openQr}
           >
             <Icon type="qrcode" /> QR Code
           </Button>
@@ -94,6 +106,17 @@ export default class AddressDetails extends React.Component<Props> {
             </div>
           </Tabs.TabPane>
         </Tabs>
+
+        <Modal
+          centered
+          visible={isQrShowing}
+          closable={false}
+          onCancel={this.closeQr}
+          onOk={this.closeQr}
+          cancelButtonProps={{ style: { display: 'none' }}}
+        >
+          <QRCode size={200} value={address} />
+        </Modal>
       </div>
     );
   }
@@ -105,4 +128,7 @@ export default class AddressDetails extends React.Component<Props> {
   private notifyCopied = () => {
     message.success('Copied to clipboard!', 1);
   };
+
+  private openQr = () => this.setState({ isQrShowing: true });
+  private closeQr = () => this.setState({ isQrShowing: false });
 }
