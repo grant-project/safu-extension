@@ -37,6 +37,7 @@ export default class AddressRow extends React.Component<Props> {
                 value={balances.ETH.balance}
                 displayShortBalance={3}
                 symbol="ETH"
+                showLoading
               />
             }
           </div>

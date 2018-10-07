@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Dropdown, Menu, Icon, Tabs } from 'antd';
 import Identicon from 'components/Identicon';
 import UnitDisplay from 'components/UnitDisplay';
+import TokenRow from './TokenRow';
 import { SOURCE_UI } from 'utils/ui';
 import { AddressConfig, AddressSource } from 'modules/addresses/types';
 import { TokenMap } from 'modules/balances/types';
@@ -49,6 +50,12 @@ export default class AddressDetails extends React.Component<Props> {
             <br/>
             {address.substr(address.length / 2)}
           </div>
+
+          <Dropdown overlay={menu} trigger={['click']}>
+            <Button className="AddressDetails-top-more" shape="circle">
+              <MenuIcon className="AddressDetails-top-more-icon" />
+            </Button>
+          </Dropdown>
         </div>
 
         <div className="AddressDetails-actions">
@@ -70,20 +77,16 @@ export default class AddressDetails extends React.Component<Props> {
 
         <Tabs className="AddressDetails-tabs" defaultActiveKey="tokens">
           <Tabs.TabPane tab="Token Balances" key="tokens">
-            {balances && Object.values(balances).map(b => (
-              <div key={b.symbol}>
-                <UnitDisplay value={b.balance} symbol={b.symbol} displayShortBalance={4} />
-              </div>
+            {balances && Object.values(balances).map(token => (
+              <TokenRow key={token.address} token={token} />
             ))}
           </Tabs.TabPane>
-          <Tabs.TabPane tab="Transactions" key="transactions">Todo: Transactions</Tabs.TabPane>
+          <Tabs.TabPane tab="Transactions" key="transactions">
+            <div className="AddressDetails-tabs-missing">
+              Coming soon
+            </div>
+          </Tabs.TabPane>
         </Tabs>
-
-        <Dropdown overlay={menu} trigger={['click']}>
-          <Button className="AddressDetails-more" shape="circle">
-            <MenuIcon className="AddressDetails-more-icon" />
-          </Button>
-        </Dropdown>
       </div>
     );
   }

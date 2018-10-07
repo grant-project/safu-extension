@@ -1,5 +1,6 @@
 .AddressDetails {
   &-top {
+    position: relative;
     text-align: center;
     margin-bottom: 0.5rem;
 
@@ -33,6 +34,32 @@
       font-size: 0.8rem;
       font-family: 'Courier New', Courier, monospace;
     }
+
+    &-more {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: -0.7rem;
+      left: -0.5rem;
+      border: none;
+  
+      &-icon {
+        width: 1rem;
+        height: 1rem;
+        opacity: 0.2;
+        transform: rotate(90deg);
+      }
+  
+      &:hover {
+        opacity: 1;
+        background: rgba(#000, 0.05);
+  
+        > svg {
+          opacity: 0.5;
+        }
+      }
+    }
   }
 
   &-actions {
@@ -49,6 +76,18 @@
     margin-left: -24px;
     margin-right: -24px;
 
+    &-missing {
+      text-align: center;
+      padding: 3rem 0;
+      font-size: 2rem;
+      font-weight: 300;
+      opacity: 0.2;
+    }
+
+    .ant-tabs-bar {
+      margin: 0;
+    }
+
     .ant-tabs-nav {
       width: 100%;
 
@@ -62,32 +101,6 @@
         flex: 1;
         text-align: center;
         font-weight: normal;
-      }
-    }
-  }
-
-  &-more {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 1rem;
-    left: 1rem;
-    border: none;
-
-    &-icon {
-      width: 1rem;
-      height: 1rem;
-      opacity: 0.2;
-      transform: rotate(90deg);
-    }
-
-    &:hover {
-      opacity: 1;
-      background: rgba(#000, 0.05);
-
-      > svg {
-        opacity: 0.5;
       }
     }
   }

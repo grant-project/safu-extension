@@ -42,8 +42,6 @@ function hydrateBalancesPerAddress(
       const flatIdx = j + tokens.length * i;
       const balance = new BN(result[flatIdx]);
 
-
-      console.log(balance);
       if (!balance.isZero()) {
         const token = tokens[j];
 
@@ -86,7 +84,6 @@ export function* fetchBalances(): SagaIterator {
   const addresses: ReturnType<typeof getAllAddresses> = yield select(getAllAddresses);
   const tokenAddresses = tokensJson.map(t => t.address);
   try {
-    console.log(balanceContract);
     const method = balanceContract.methods.balances(addresses, tokenAddresses);
     const res: ExtPromise<ReturnType<BalanceContract['balances']>> = yield apply(
       method,
