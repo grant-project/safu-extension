@@ -15,7 +15,6 @@ type Props = DispatchProps;
 
 class Header extends React.Component<Props> {
   handleSafuIcon = () => {
-    console.log('safuAudio', safuAudio);
     const myAudio = new Audio(); // create the audio object
     myAudio.src = safuAudio;
     myAudio.play();
