@@ -6,6 +6,7 @@ import AddressDetails from 'components/AddressDetails';
 import AddressForm from 'components/AddressForm';
 import Header from 'components/Header';
 import { AddressConfig } from 'modules/addresses/types';
+import { addressesActions } from 'modules/addresses';
 import { AppState } from 'store/reducers';
 import './addresses.less';
 
@@ -13,7 +14,11 @@ interface StateProps {
   addresses: AppState['addresses']['addresses'];
 }
 
-type Props = StateProps;
+interface DispatchProps {
+  removeAddress: typeof addressesActions['removeAddress'];
+}
+
+type Props = StateProps & DispatchProps;
 
 interface State {
   activeAddress: AddressConfig | null;
@@ -47,7 +52,11 @@ class AddressesPage extends React.Component<Props, State> {
       );
     } else if (activeAddress) {
       drawerContent = (
-        <AddressDetails address={activeAddress} onEdit={this.toggleEdit} />
+        <AddressDetails
+          address={activeAddress}
+          onEdit={this.toggleEdit}
+          onDelete={this.handleDelete}
+        />
       );
     }
 
@@ -94,10 +103,18 @@ class AddressesPage extends React.Component<Props, State> {
   private toggleAdd = () => {
     this.setState({ isAddingAddress: !this.state.isAddingAddress });
   };
+
+  private handleDelete = (address: AddressConfig) => {
+    this.props.removeAddress(address.address);
+    this.closeDrawer();
+  };
 }
 
-export default connect<StateProps, {}, {}, AppState>(
+export default connect<StateProps, DispatchProps, {}, AppState>(
   state => ({
     addresses: state.addresses.addresses,
   }),
+  {
+    removeAddress: addressesActions.removeAddress,
+  }
 )(AddressesPage);
