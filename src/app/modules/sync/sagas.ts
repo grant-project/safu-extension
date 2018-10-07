@@ -1,41 +1,14 @@
 import { SagaIterator, delay } from 'redux-saga';
 import { takeLatest, call, put, select, take, fork } from 'redux-saga/effects';
-import { selectSalt, selectPassword, selectHasSetPassword } from 'modules/crypto/selectors';
-import { selectAddresses } from 'modules/addresses/selectors';
-import { setAddresses } from 'modules/addresses/actions';
-import { selectSyncedCryptoState } from 'modules/crypto/selectors'
-import { setSyncedCryptoState } from 'modules/crypto/actions';
+import {
+  selectSalt,
+  selectPassword,
+  selectHasSetPassword,
+} from 'modules/crypto/selectors';
 import cryptoTypes from 'modules/crypto/types';
-import { AppState } from 'store/reducers';
 import { storageSyncGet, storageSyncSet } from 'utils/sync';
-import { encryptData, decryptData } from 'utils/crypto';
+import { encryptData, decryptData, SyncConfig, syncConfigs } from 'utils/crypto';
 import { startSync, finishSync } from './actions';
-
-interface SyncConfig<T> {
-  key: string;
-  encrypted: boolean;
-  triggerActions: string[];
-  selector(state: AppState): T;
-  action(payload: T): {
-    type: string;
-    payload: T;
-  };
-}
-const syncConfigs: Array<SyncConfig<any>> = [{
-  key: 'crypto',
-  encrypted: false,
-  selector: selectSyncedCryptoState,
-  action: setSyncedCryptoState,
-  // TODO: Add triggers for when they reset account, import account
-  triggerActions: [cryptoTypes.SET_PASSWORD],
-}, {
-  key: 'addresses',
-  encrypted: true,
-  selector: selectAddresses,
-  action: setAddresses,
-  // TODO: Add triggers for when they add, remove addresses
-  triggerActions: [],
-}];
 
 export function* encryptAndSync(syncConfig: SyncConfig<any>): SagaIterator {
   // Debounce by a bit in case of rapid calls

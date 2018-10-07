@@ -1,13 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Settings from 'components/Settings';
 
 export default class SettingsPage extends React.Component {
   render() {
-    return (
-      <>
-        <h1>Settings</h1>
-        <Link to="/">Back to addresses</Link>
-      </>
-    );
+    return <Settings />;
   }
 }
