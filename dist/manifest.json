@@ -1,20 +1,19 @@
 {
   "manifest_version": 2,
-  "name": "Chrome Extension TypeScript Starter",
-  "description": "Chrome Extension, TypeScript, React",
-  "version": "1.0",
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
+  "name": "Safu",
+  "description": "Keep track of addresses and private keys, the safu way",
+  "version": "0.1",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "browser_action": {
-    "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
   "permissions": [
-    "storage",
-    "<all_urls>"
+    "storage"
   ],
-  "web_accessible_resources": [ "*.mp3" ],
+  "web_accessible_resources": ["*.mp3"],
   "content_security_policy": "script-src 'self' 'unsafe-eval';"
 }
