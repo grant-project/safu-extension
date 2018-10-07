@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { addressesActions } from 'modules/addresses';
 import { AddressConfig, AddressSource } from 'modules/addresses/types';
 import { isValidEthAddress, isValidMnemonic, isValidPrivateKey } from 'utils/validators';
+import { SOURCE_UI } from 'utils/ui';
 import './style.less';
 
 interface DispatchProps {
@@ -85,9 +86,23 @@ class AddressForm extends React.Component<Props, State> {
             value={values.source}
             onChange={this.handleSourceChange}
           >
-            {Object.keys(AddressSource).map(key => (
-              <Select.Option key={key} value={key}>{key}</Select.Option>
-            ))}
+            {Object.keys(AddressSource).map(key => {
+              const ui = SOURCE_UI[key as AddressSource];
+              const SourceIcon = ui.icon;
+              return (
+                <Select.Option key={key} value={key}>
+                  <div className="SourceOption">
+                    <SourceIcon
+                      className="SourceOption-icon"
+                      style={{ fill: ui.color, stroke: ui.color }}
+                    />
+                    <div className="SourceOption-label">
+                      {ui.label}
+                    </div>
+                  </div>
+                </Select.Option>
+              );
+            })}
           </Select>
           {values.source === AddressSource.PRIVATE_KEY && !isBackupExpanded &&
             <a

@@ -11,7 +11,7 @@ export enum AddressSource {
   PRIVATE_KEY = 'PRIVATE_KEY',
   LEDGER = 'LEDGER',
   TREZOR = 'TREZOR',
-  KEEP_KEY = 'KEEP_KEY',
+  KEEPKEY = 'KEEPKEY',
   METAMASK = 'METAMASK',
   VIEW_ONLY = 'VIEW_ONLY',
   OTHER = 'OTHER',

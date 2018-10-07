@@ -1,7 +1,8 @@
 import React from 'react';
 import { Button, Dropdown, Menu, Icon, Tabs } from 'antd';
 import Identicon from 'components/Identicon';
-import { AddressConfig } from 'modules/addresses/types';
+import { SOURCE_UI } from 'utils/ui';
+import { AddressConfig, AddressSource } from 'modules/addresses/types';
 import MenuIcon from 'static/images/menu.svg';
 import './style.less';
 
@@ -13,7 +14,7 @@ interface Props {
 
 export default class AddressDetails extends React.Component<Props> {
   render() {
-    const { address, label } = this.props.address;
+    const { address, label, source } = this.props.address;
     const menu = (
       <Menu>
         <Menu.Item onClick={this.props.onEdit}>
@@ -24,12 +25,21 @@ export default class AddressDetails extends React.Component<Props> {
         </Menu.Item>
       </Menu>
     );
+    const sourceui = SOURCE_UI[source as AddressSource];
+    const SourceIcon = sourceui.icon;
 
     return (
       <div className="AddressDetails">
         <div className="AddressDetails-top">
           <Identicon className="AddressDetails-top-avatar" address={address} />
           <div className="AddressDetails-top-label">{label}</div>
+          <div className="AddressDetails-top-source">
+            <SourceIcon
+              className="AddressDetails-top-source-icon"
+              style={{ fill: sourceui.color, stroke: sourceui.color }}
+            />
+            {sourceui.label}
+          </div>
           <div className="AddressDetails-top-address">
             {address.substr(0, address.length / 2)}
             <br/>
