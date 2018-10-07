@@ -69,6 +69,12 @@ const urlLoaderClient = {
   },
 };
 
+const mp3LoaderClient = {
+  test: /\.mp3$/,
+  exclude: [/node_modules/],
+  loader: 'file-loader',
+};
+
 module.exports = {
   mode: isDev ? 'development' : 'production',
   name: 'client',
@@ -114,10 +120,11 @@ module.exports = {
       cssLoaderClient,
       svgLoaderClient,
       urlLoaderClient,
+      mp3LoaderClient
     ],
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.mjs', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.mjs', '.json', '.mp3'],
     modules: [srcApp, path.join(__dirname, 'node_modules')],
     alias: {
       api: `${srcApp}/api`,
