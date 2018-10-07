@@ -19,9 +19,16 @@ interface Props {
 export default class AddressDetails extends React.Component<Props> {
   render() {
     const { balances } = this.props;
-    const { address, label, source } = this.props.address;
+    const { address, label, source, backup } = this.props.address;
     const menu = (
       <Menu>
+        {backup &&
+          <CopyToClipboard text={backup} onCopy={this.notifyCopied}>
+            <Menu.Item>
+              Copy private key
+            </Menu.Item>
+          </CopyToClipboard>
+        }
         <Menu.Item onClick={this.props.onEdit}>
           Edit
         </Menu.Item>
@@ -96,6 +103,6 @@ export default class AddressDetails extends React.Component<Props> {
   };
 
   private notifyCopied = () => {
-    message.success('Copied to clipboard!', 2);
+    message.success('Copied to clipboard!', 1);
   };
 }
