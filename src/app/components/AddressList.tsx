@@ -13,20 +13,17 @@ export default class AddressList extends React.Component<Props> {
   render() {
     const { addresses, balances, onClickAddress } = this.props;
 
-    let content;
-    if (addresses.length) {
-      content = addresses.map(a => (
-        <AddressRow
-          key={a.address}
-          address={a}
-          balances={balances[a.address]}
-          onClick={onClickAddress}
-        />
-      ));
-    } else {
-      content = <h1>No addresses yet!</h1>;
-    }
-
-    return content;
+    return (
+      <div>
+        {addresses.map(a => (
+          <AddressRow
+            key={a.address}
+            address={a}
+            balances={balances[a.address]}
+            onClick={onClickAddress}
+          />
+        ))}
+      </div>
+    );
   }
 }

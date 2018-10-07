@@ -1,7 +1,19 @@
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 .CreatePassword {
-  margin: 1rem 1.5rem;
+  padding: 1rem 1.5rem;
   position: relative;
   height: 100%;
+  animation: slide-in-right 300ms ease;
 
   &-title {
     font-size: 1.5rem;
@@ -14,7 +26,6 @@
 
   &-input {
     width: 100%;
-    margin-bottom: 0.8rem;
   }
 
   &-passtr {
@@ -25,13 +36,15 @@
       & > div {
         flex-grow: 1;
         height: 8px;
+        background: #ededed;
+        transition: background-color 150ms ease;
 
         &:first-child {
-          border-radius: 4px 0 0 4px;
+          border-radius: 8px 0 0 8px;
         }
 
         &:last-child {
-          border-radius: 0 4px 4px 0;
+          border-radius: 0 8px 8px 0;
         }
       }
 
@@ -41,17 +54,12 @@
     }
 
     &-text {
+      display: block;
       text-align: center;
-      margin: 0.5rem 0;
-    }
-
-    &.is-str0 {
-      .CreatePassword-passtr-bar > div {
-        background: #ededed;
-      }
-      .CreatePassword-passtr-text {
-        color: transparent;
-      }
+      margin: 0.75rem 0 0.5rem;
+      height: 1rem;
+      line-height: 1rem;
+      transition: color 150ms ease;
     }
 
     &.is-str1 {
@@ -94,16 +102,17 @@
   }
 
   &-continue {
-    margin: 2rem;
+    margin-top: 1rem;
     text-align: center;
   }
 
   &-disclaimer {
     position: absolute;
-    color: #848484;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    line-height: 1.2rem;
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    font-size: 0.75rem;
+    opacity: 0.4;
+    text-align: justify;
   }
 }

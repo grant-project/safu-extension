@@ -1,7 +1,22 @@
+@keyframes fade-splash-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .Splash {
-  margin: 2rem 2rem;
+  padding: 2rem;
   position: relative;
   height: 100%;
+
+  &-inner {
+    animation: fade-splash-up 500ms ease 1;
+  }
 
   h2 {
     font-family: courier;
@@ -16,7 +31,7 @@
   }
 
   ul {
-    margin: 2rem 0 3rem 0;
+    margin: 2rem 0 2rem 0;
     font-size: 1rem;
     line-height: 2.4rem;
     list-style: none;
@@ -35,7 +50,7 @@
     text-align: center;
 
     &-restore {
-      margin-top: 3rem;
+      margin-top: 1rem;
       display: inline-block;
       color: #828282;
     }

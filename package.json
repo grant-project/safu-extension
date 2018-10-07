@@ -131,7 +131,8 @@
     "webpack-dev-server": "^3.1.8",
     "webpack-hot-middleware": "^2.24.0",
     "xmlhttprequest": "1.8.0",
-    "xss": "1.0.3"
+    "xss": "1.0.3",
+    "zxcvbn": "4.4.2"
   },
   "devDependencies": {
     "@types/bip39": "2.4.0",
@@ -140,6 +141,7 @@
     "@types/crypto-js": "3.1.43",
     "@types/ethereumjs-util": "5.2.0",
     "@types/web3": "1.0.3",
+    "@types/zxcvbn": "4.4.0",
     "rimraf": "2.6.2"
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { Drawer, Icon } from 'antd';
 import AddressList from 'components/AddressList';
@@ -77,6 +78,12 @@ class AddressesPage extends React.Component<Props, State> {
           balances={balances}
           onClickAddress={this.setActiveAddress}
         />
+        {!addresses.length &&
+          <div className="AddressesPage-empty">
+            Add your first address below
+          </div>
+        }
+
         <Drawer
           className="AddressesPage-drawer"
           title={drawerTitle}
@@ -88,7 +95,12 @@ class AddressesPage extends React.Component<Props, State> {
           {drawerContent}
         </Drawer>
 
-        <button className="AddressesPage-add" onClick={this.toggleAdd}>
+        <button
+          className={
+            classnames('AddressesPage-add', addresses.length === 0 && 'is-pulsing')
+          }
+          onClick={this.toggleAdd}
+        >
           <Icon type="plus" />
         </button>
       </div>

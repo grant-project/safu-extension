@@ -12,20 +12,22 @@ export default class Splash extends React.Component<Props> {
   render() {
     return (
       <div className="Splash">
-        <h2>keep your funds</h2>
-        <Logo />
-        <ul>
-          <li>Tag &amp; keep track of addresses</li>
-          <li>Check all of your balances</li>
-          <li>Securely store private keys</li>
-        </ul>
-        <div className="Splash-controls">
-          <Button size="large" type="primary" onClick={this.props.handleContinue}>
-            Get started
-          </Button>
-          <a className="Splash-controls-restore" onClick={this.props.handleRestore}>
-            Restore Safu backup
-          </a>
+        <div className="Splash-inner">
+          <h2>keep your funds</h2>
+          <Logo />
+          <ul>
+            <li>Tag &amp; keep track of addresses</li>
+            <li>Check all of your balances</li>
+            <li>Securely store private keys</li>
+          </ul>
+          <div className="Splash-controls">
+            <Button size="large" type="primary" onClick={this.props.handleContinue}>
+              Get started
+            </Button>
+            <a className="Splash-controls-restore" onClick={this.props.handleRestore}>
+              Restore Safu backup
+            </a>
+          </div>
         </div>
       </div>
     );

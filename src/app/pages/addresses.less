@@ -1,6 +1,25 @@
+@keyframes add-button-pulse {
+  0% {
+    opacity: 1;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
 .AddressesPage {
   height: 100vh;
   position: relative;
+
+  &-empty {
+    padding-top: 4rem;
+    text-align: center;
+    opacity: 0.4;
+    font-size: 1.4rem;
+    font-weight: 300;
+  }
 
   &-drawer {
     z-index: 1000;
@@ -35,6 +54,22 @@
       transform: translate(0);
       box-shadow: 0 1px 4px rgba(#000, 0.4);
       color: rgba(#000, 0.8);
+    }
+
+    &.is-pulsing {
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        box-shadow: 0 0 10px rgba(#f4bb00, 0.8);
+        animation: add-button-pulse 1200ms ease-out infinite;
+        z-index: -1;
+      }
     }
   }
 }

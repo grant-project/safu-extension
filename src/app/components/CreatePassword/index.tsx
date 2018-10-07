@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Input, Icon } from 'antd';
+import { Form, Button, Input, Icon } from 'antd';
+import zxcvbn from 'zxcvbn';
 import './style.less';
 
 interface Props {
@@ -35,17 +36,8 @@ export default class CreatePassword extends React.Component<Props, State> {
     };
     const password1 = setPass(name, 'p1', value, this.state.password1);
     const password2 = setPass(name, 'p2', value, this.state.password2);
-    const isReady = password1 === password2 && password1.length > 7;
-    let strength = 0;
-    if (password2.length === 0) {
-      strength = 0;
-    } else if (password2.length < 4) {
-      strength = 1;
-    } else if (password2.length < 8) {
-      strength = 2;
-    } else if (password2.length >= 8) {
-      strength = 3;
-    }
+    const strength = Math.min(Math.max(zxcvbn(password1).score, value.length ? 1 : 0), 3);
+    const isReady = password1 === password2 && strength >= 2;
     this.setState({ password1, password2, isReady, strength });
   };
 
@@ -55,45 +47,46 @@ export default class CreatePassword extends React.Component<Props, State> {
   };
 
   render() {
+    const { password1, password2, isReady, strength } = this.state;
+    const p2status = password2.length > 0 ?
+      password1 === password2 ?
+        'success' :
+        'error'
+      : undefined;
     return (
-      <form className="CreatePassword" onSubmit={this.handleSubmit}>
+      <Form className="CreatePassword" onSubmit={this.handleSubmit}>
         <h2 className="CreatePassword-title">Create a Password</h2>
-        <div className="CreatePassword-label">Password (min 8 chars)</div>
-        <Input
-          name="p1"
-          value={this.state.password1}
-          onChange={this.handleInputChange}
-          className="CreatePassword-input"
-          size="large"
-          type="password"
-        />
-        <div className="CreatePassword-label">Confirm password</div>
-        <Input
-          name="p2"
-          value={this.state.password2}
-          onChange={this.handleInputChange}
-          className="CreatePassword-input"
-          size="large"
-          type="password"
-          suffix={
-            this.state.password2.length > 0 ? (
-              this.state.isReady ? (
-                <Icon className="CreatePassword-check" type="check" />
-              ) : (
-                <Icon className="CreatePassword-close" type="close" />
-              )
-            ) : null
-          }
-        />
-        <div className={`CreatePassword-passtr is-str${this.state.strength}`}>
+
+        <Form.Item label="Password">
+          <Input
+            name="p1"
+            value={password1}
+            onChange={this.handleInputChange}
+            className="CreatePassword-input"
+            size="large"
+            type="password"
+          />
+        </Form.Item>
+        
+        <Form.Item label="Confirm password" validateStatus={p2status}>
+          <Input
+            name="p2"
+            value={password2}
+            onChange={this.handleInputChange}
+            className="CreatePassword-input"
+            size="large"
+            type="password"
+          />
+        </Form.Item>
+        <div className={`CreatePassword-passtr is-str${strength}`}>
           <div className="CreatePassword-passtr-bar">
-            <div className="CreatePassword-passtr-bar-a">&nbsp;</div>
-            <div className="CreatePassword-passtr-bar-b">&nbsp;</div>
-            <div className="CreatePassword-passtr-bar-c">&nbsp;</div>
+            <div className="CreatePassword-passtr-bar-a" />
+            <div className="CreatePassword-passtr-bar-b" />
+            <div className="CreatePassword-passtr-bar-c" />
           </div>
           <div className="CreatePassword-passtr-text">
             {
-              ['', 'Not safu.', 'Almost safu...', 'Password is safu!'][
+              ['', 'Not safu.', 'Kinda safu...', 'Password is safu!'][
                 this.state.strength
               ]
             }
@@ -114,7 +107,7 @@ export default class CreatePassword extends React.Component<Props, State> {
           to unlocking when you want to check your accounts. Make sure you back this up,
           it cannot be recovered for you.
         </div>
-      </form>
+      </Form>
     );
   }
 }
