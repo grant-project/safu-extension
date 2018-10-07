@@ -42,3 +42,64 @@
 .HeaderPlaceholder {
   height: @header-height;
 }
+
+@keyframes safu-flyby {
+  0% {
+    transform: translateX(-30%) rotate(-50deg);
+  }
+  100% {
+    transform: translateX(70%) rotate(50deg);
+  }
+}
+
+@keyframes safu-glow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+}
+
+.OhMyGodItsCZ {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 30%;
+  left: 0;
+  transform-origin: bottom center;
+  animation: safu-flyby 3500ms ease 1;
+  z-index: 99999999;
+  pointer-events: none;
+
+  &-cz {
+    position: absolute;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+
+    &:before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 10rem;
+      height: 10rem;
+      box-shadow: 0 0 40px 15px rgba(#f4bb00, 0.6);
+      border-radius: 100%;
+      animation: safu-glow 400ms ease infinite;
+      z-index: -1;
+    }
+  }
+}

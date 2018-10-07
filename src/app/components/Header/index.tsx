@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom';
 import { Icon } from 'antd';
 import { cryptoActions } from 'modules/crypto';
 import SafuIcon from 'static/images/safu-icon.svg';
-import './style.less';
 import safuAudio from 'static/audio/safu-cropped.mp3';
+import OurLordAndSavior from 'static/images/cz.png';
+import './style.less';
 
 interface DispatchProps {
   logout: typeof cryptoActions['logout'];
@@ -13,13 +14,32 @@ interface DispatchProps {
 
 type Props = DispatchProps;
 
-class Header extends React.Component<Props> {
+interface State {
+  areFundsSafu: boolean;
+}
+
+class Header extends React.Component<Props, State> {
+  state: State = {
+    areFundsSafu: false,
+  };
+
+  private timeout: any;
+
   handleSafuIcon = () => {
-    const myAudio = new Audio(); // create the audio object
+    const myAudio = new Audio();
     myAudio.src = safuAudio;
     myAudio.play();
+    this.setState({ areFundsSafu: false }, () => {
+      this.setState({ areFundsSafu: true });
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => {
+        this.setState({ areFundsSafu: false });
+      }, 20000);
+    });
   };
+
   render() {
+    const { areFundsSafu } = this.state;
     return (
       <>
         <div className="Header">
@@ -34,6 +54,13 @@ class Header extends React.Component<Props> {
           </div>
         </div>
         <div className="HeaderPlaceholder" />
+        {areFundsSafu &&
+          <div className="OhMyGodItsCZ">
+            <div className="OhMyGodItsCZ-cz">
+              <img src={OurLordAndSavior} />
+            </div>
+          </div>
+        }
       </>
     );
   }
