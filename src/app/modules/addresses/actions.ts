@@ -20,3 +20,13 @@ export function removeAddress(payload: string) {
     payload,
   };
 }
+
+export function updateAddress(payload: {
+  oldAddress: string;
+  newConfig: AddressConfig;
+}) {
+  return {
+    type: types.UPDATE_ADDRESS,
+    payload,
+  };
+}

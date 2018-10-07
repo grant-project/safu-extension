@@ -1,0 +1,40 @@
+.AddressesPage {
+  height: 100vh;
+  position: relative;
+
+  &-drawer {
+    z-index: 1000;
+  }
+
+  &-add {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 1rem;
+    right: 1rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 100%;
+    font-size: 1.6rem;
+    background: linear-gradient(#FFF, #FAFAFA);
+    box-shadow: 0 1px 4px rgba(#000, 0.3);
+    outline: none;
+    transition: box-shadow 120ms ease, transform 120ms ease;
+    color: rgba(#000, 0.5);
+    border: none;
+
+    &:hover,
+    &:focus {
+      transform: translateY(-2px);
+      box-shadow: 0 2px 6px rgba(#000, 0.2);
+      color: rgba(#000, 0.8);
+    }
+
+    &:active {
+      transform: translate(0);
+      box-shadow: 0 1px 4px rgba(#000, 0.4);
+      color: rgba(#000, 0.8);
+    }
+  }
+}

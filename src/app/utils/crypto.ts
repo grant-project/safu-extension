@@ -1,6 +1,7 @@
 import { AES, enc } from 'crypto-js';
 import { selectAddresses } from 'modules/addresses/selectors';
 import { setAddresses } from 'modules/addresses/actions';
+import addressesTypes from 'modules/addresses/types';
 import {
   selectSyncedCryptoState,
   selectSalt,
@@ -49,7 +50,12 @@ export const syncConfigs: Array<SyncConfig<any>> = [
     selector: selectAddresses,
     action: setAddresses,
     // TODO: Add triggers for when they add, remove addresses
-    triggerActions: ['BACKUP_RESTORED'],
+    triggerActions: [
+      'BACKUP_RESTORED',
+      addressesTypes.ADD_ADDRESS,
+      addressesTypes.REMOVE_ADDRESS,
+      addressesTypes.UPDATE_ADDRESS,
+    ],
   },
 ];
 

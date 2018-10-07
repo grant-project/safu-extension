@@ -4,20 +4,17 @@ import { AddressConfig } from 'modules/addresses/types';
 
 interface Props {
   addresses: AddressConfig[];
+  onClickAddress?(address: AddressConfig): void;
 }
 
-interface State {
-  activeAddress: AddressConfig[];
-}
-
-export default class AddressList extends React.Component<Props, State> {
+export default class AddressList extends React.Component<Props> {
   render() {
-    const { addresses } = this.props;
+    const { addresses, onClickAddress } = this.props;
 
     let content;
     if (addresses.length) {
       content = addresses.map(a => (
-        <AddressRow key={a.address} address={a} />
+        <AddressRow key={a.address} address={a} onClick={onClickAddress} />
       ));
     } else {
       content = <h1>No addresses yet!</h1>;
