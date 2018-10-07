@@ -44,6 +44,12 @@ export default function cryptoReducers(
         password: action.payload,
       };
 
+    case types.LOGOUT:
+      return {
+        ...state,
+        password: null,
+      };
+
     case types.SET_SYNCED_CRYPTO_STATE:
       return {
         ...state,
