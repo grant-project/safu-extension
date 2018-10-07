@@ -101,6 +101,7 @@
     "prettier-package-json": "^1.6.0",
     "qrcode.react": "0.8.0",
     "react": "^16.4.0",
+    "react-chartjs": "1.2.0",
     "react-copy-to-clipboard": "5.0.1",
     "react-dev-utils": "^5.0.2",
     "react-dom": "^16.4.0",

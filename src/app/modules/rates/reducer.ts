@@ -31,9 +31,9 @@ export function ratesReducer(
   action: types.RatesAction
 ): types.RatesState {
   switch (action.type) {
-    case types.RatesActions.CC_SUCCEEDED:
+    case types.RatesTypes.CC_SUCCEEDED:
       return fetchCCRatesSucceeded(state, action);
-    case types.RatesActions.CC_FAILED:
+    case types.RatesTypes.CC_FAILED:
       return fetchCCRatesFailed(state);
     default:
       return state;

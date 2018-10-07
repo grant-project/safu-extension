@@ -74,7 +74,7 @@ export const fetchRates = (symbols: string[] = []): Promise<CCResponse> =>
       if ((rates as IRatesError).Response === 'Error') {
         throw new Error('Failed to fetch rates');
       }
-      return rates;
+      return rates as IRatesResponse;
     })
     .then((rates: IRatesResponse) => {
       // Sometimes the API erroneously gives tokens an extremely high value,

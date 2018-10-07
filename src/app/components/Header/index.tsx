@@ -45,6 +45,9 @@ class Header extends React.Component<Props, State> {
         <div className="Header">
           <SafuIcon className="Header-icon" onClick={this.handleSafuIcon} />
           <div className="Header-links">
+            <Link className="Header-links-link" to="/financials">
+              <Icon type="area-chart" />
+            </Link>
             <Link className="Header-links-link" to="/settings">
               <Icon type="setting" />
             </Link>

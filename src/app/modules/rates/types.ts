@@ -1,6 +1,6 @@
 import { CCResponse } from '../../api/rates';
 
-export enum RatesActions {
+export enum RatesTypes {
   CC_REQUESTED = 'RATES_FETCH_CC_REQUESTED',
   CC_FAILED = 'RATES_FETCH_CC_FAILED',
   CC_SUCCEEDED = 'RATES_FETCH_CC_SUCCEEDED'
@@ -13,17 +13,19 @@ export interface RatesState {
 }
 
 export interface FetchCCRatesRequested {
-  type: RatesActions.CC_REQUESTED;
+  type: RatesTypes.CC_REQUESTED;
   payload: string[];
 }
 
 export interface FetchCCRatesSucceeded {
-  type: RatesActions.CC_SUCCEEDED;
+  type: RatesTypes.CC_SUCCEEDED;
   payload: CCResponse;
 }
 
 export interface FetchCCRatesFailed {
-  type: RatesActions.CC_FAILED;
+  type: RatesTypes.CC_FAILED;
 }
 
 export type RatesAction = FetchCCRatesRequested | FetchCCRatesSucceeded | FetchCCRatesFailed;
+
+export default RatesTypes;

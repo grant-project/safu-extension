@@ -6,6 +6,7 @@ import OnboardingPage from 'pages/onboarding';
 import PasswordPage from 'pages/password';
 import AddressesPage from 'pages/addresses';
 import SettingsPage from 'pages/settings';
+import FinancialsPage from 'pages/financials';
 
 interface StateProps {
   password: AppState['crypto']['password'];
@@ -29,6 +30,7 @@ class Routes extends React.Component<Props> {
         <Route path="/" exact component={AddressesPage} />
         <Route path="/onboarding" exact component={OnboardingPage} />
         <Route path="/password" exact component={PasswordPage} />
+        <Route path="/financials" exact component={FinancialsPage} />
         <Route path="/settings" exact component={SettingsPage} />
         <Route path="/*" render={() => <h1>Oh shit howd you get here</h1>} />
       </Switch>
