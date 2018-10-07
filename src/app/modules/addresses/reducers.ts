@@ -39,6 +39,17 @@ export default function addressesReducer(
         addresses: state.addresses
           .filter(a => a.address !== action.payload),
       };
+    
+    case types.UPDATE_ADDRESS:
+      return {
+        ...state,
+        addresses: state.addresses.map(a => {
+          if (a.address === action.payload.oldAddress) {
+            return action.payload.newConfig;
+          }
+          return a;
+        }),
+      };
   }
 
   return state;
