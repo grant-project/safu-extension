@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Dropdown, Menu, Icon, Tabs } from 'antd';
+import { Button, Dropdown, Menu, Icon, Tabs, message} from 'antd';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Identicon from 'components/Identicon';
-import UnitDisplay from 'components/UnitDisplay';
 import TokenRow from './TokenRow';
 import { SOURCE_UI } from 'utils/ui';
 import { AddressConfig, AddressSource } from 'modules/addresses/types';
@@ -45,11 +45,11 @@ export default class AddressDetails extends React.Component<Props> {
             />
             {sourceui.label}
           </div>
-          <div className="AddressDetails-top-address">
-            {address.substr(0, address.length / 2)}
-            <br/>
-            {address.substr(address.length / 2)}
-          </div>
+          <CopyToClipboard text={address} onCopy={this.notifyCopied}>
+            <div className="AddressDetails-top-address">
+              {address}
+            </div>
+          </CopyToClipboard>
 
           <Dropdown overlay={menu} trigger={['click']}>
             <Button className="AddressDetails-top-more" shape="circle">
@@ -93,5 +93,9 @@ export default class AddressDetails extends React.Component<Props> {
 
   private onDelete = () => {
     this.props.onDelete(this.props.address);
+  };
+
+  private notifyCopied = () => {
+    message.success('Copied to clipboard!', 2);
   };
 }
