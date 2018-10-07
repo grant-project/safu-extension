@@ -88,7 +88,9 @@ export function injectBackupData(
         value = decryptData(value, password, salt);
       }
       dispatch(sc.action(value));
-      dispatch({ type: 'BACKUP_RESTORED' });
     }
   });
+  setTimeout(() => {
+    dispatch({ type: 'BACKUP_RESTORED' });
+  }, 50);
 }

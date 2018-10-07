@@ -2,6 +2,7 @@ import { SagaIterator } from 'redux-saga';
 import { takeLatest, put, select, apply } from 'redux-saga/effects';
 import { BALANCES, TokenWithBalance, TokenMap, BalanceMap } from './types';
 import { getAllAddresses } from 'modules/addresses/selectors';
+import addressesTypes from 'modules/addresses/types';
 const { abi, address : contractAddress } = require('./getBalances.abi.json');
 const tokensJson = require('./tokens.json');
 import BN from 'bn.js'
@@ -104,5 +105,8 @@ export function* fetchBalances(): SagaIterator {
 }
 
 export default function* balancesSagas(): SagaIterator {
-  yield takeLatest(BALANCES.REQUESTED, fetchBalances);
+  yield takeLatest([
+    BALANCES.REQUESTED,
+    addressesTypes.ADD_ADDRESS,
+  ], fetchBalances);
 }
