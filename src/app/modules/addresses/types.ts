@@ -13,6 +13,7 @@ export enum AddressSource {
   TREZOR = 'TREZOR',
   KEEP_KEY = 'KEEP_KEY',
   METAMASK = 'METAMASK',
+  VIEW_ONLY = 'VIEW_ONLY',
   OTHER = 'OTHER',
 }
 

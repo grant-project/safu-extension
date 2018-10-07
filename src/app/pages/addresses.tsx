@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Drawer } from 'antd';
+import { Drawer, Icon } from 'antd';
 import AddressList from 'components/AddressList';
 import AddressDetails from 'components/AddressDetails';
 import AddressForm from 'components/AddressForm';
 import Header from 'components/Header';
 import { AddressConfig } from 'modules/addresses/types';
 import { AppState } from 'store/reducers';
+import './addresses.less';
 
 interface StateProps {
   addresses: AppState['addresses']['addresses'];
@@ -51,13 +52,14 @@ class AddressesPage extends React.Component<Props, State> {
     }
 
     return (
-      <div>
+      <div className="AddressesPage">
         <Header />
         <AddressList
           addresses={addresses}
           onClickAddress={this.setActiveAddress}
         />
         <Drawer
+          className="AddressesPage-drawer"
           title={drawerTitle}
           closable
           visible={!!activeAddress || !!isAddingAddress}
@@ -66,6 +68,10 @@ class AddressesPage extends React.Component<Props, State> {
         >
           {drawerContent}
         </Drawer>
+
+        <button className="AddressesPage-add" onClick={this.toggleAdd}>
+          <Icon type="plus" />
+        </button>
       </div>
     );
   }
@@ -84,6 +90,9 @@ class AddressesPage extends React.Component<Props, State> {
 
   private toggleEdit = () => {
     this.setState({ isEditingAddress: !this.state.isEditingAddress });
+  };
+  private toggleAdd = () => {
+    this.setState({ isAddingAddress: !this.state.isAddingAddress });
   };
 }
 

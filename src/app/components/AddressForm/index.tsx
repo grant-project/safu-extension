@@ -219,7 +219,7 @@ class AddressForm extends React.Component<Props, State> {
 }
 
 export default connect(undefined, {
-addAddress: addressesActions.addAddress,
-removeAddress: addressesActions.removeAddress,
-updateAddress: addressesActions.updateAddress,
+  addAddress: addressesActions.addAddress,
+  removeAddress: addressesActions.removeAddress,
+  updateAddress: addressesActions.updateAddress,
 })(AddressForm);
