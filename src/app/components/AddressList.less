@@ -1,0 +1,27 @@
+@keyframes row-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.staggered-animation-delay(@n, @i: 1) when (@i =< @n) {
+  &:nth-child(@{i}) {
+    animation-delay: (@i * 80ms);
+  }
+  .staggered-animation-delay(@n, (@i + 1));
+}
+
+.AddressList {
+  overflow-x: hidden;
+
+  .AddressRow {
+    animation: row-fade-up 300ms ease 1;
+    animation-fill-mode: both;
+    .staggered-animation-delay(10);
+  }
+}

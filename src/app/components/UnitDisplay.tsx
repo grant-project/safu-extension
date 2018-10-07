@@ -1,6 +1,5 @@
 // Adapted from https://github.com/MyCryptoHQ/MyCrypto/blob/develop/common/components/ui/UnitDisplay.tsx
 import React from 'react';
-import { Spin } from 'antd';
 import {
   fromTokenBase,
   getDecimalFromEtherUnit,
@@ -30,7 +29,6 @@ interface Props {
    */
   displayShortBalance?: boolean | number;
   displayTrailingZeroes?: boolean;
-  showLoading?: boolean;
 }
 
 interface EthProps extends Props {
@@ -44,11 +42,7 @@ const isTokenUnit = (param: EthProps | TokenProps): param is TokenProps =>
   !!(param as TokenProps).decimal;
 
 const UnitDisplay: React.SFC<EthProps | TokenProps> = params => {
-  const { value, symbol, displayShortBalance, displayTrailingZeroes, showLoading } = params;
-
-  if (!value && showLoading) {
-    return <Spin />;
-  }
+  const { value, symbol, displayShortBalance, displayTrailingZeroes } = params;
 
   const convertedValue = isTokenUnit(params)
     ? fromTokenBase(value!, params.decimal)

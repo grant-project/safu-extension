@@ -14,6 +14,8 @@ interface Props {
 export default class AddressRow extends React.Component<Props> {
   render() {
     const { address, balances } = this.props;
+    const numBalances = balances ? Object.keys(balances).length : 0;
+
     return (
       <div className="AddressRow" onClick={this.handleClick}>
         <div className="AddressRow-avatar">
@@ -30,17 +32,22 @@ export default class AddressRow extends React.Component<Props> {
           </div>
         </div>
         <div className="AddressRow-balances">
-          <div className="AddressRow-balances-balance">
-            
-            {balances && balances.ETH &&
-              <UnitDisplay
-                value={balances.ETH.balance}
-                displayShortBalance={3}
-                symbol="ETH"
-                showLoading
-              />
-            }
-          </div>
+          {balances && balances.ETH &&
+            <>
+              <div className="AddressRow-balances-balance">
+                <UnitDisplay
+                  value={balances.ETH.balance}
+                  displayShortBalance={3}
+                  symbol="ETH"
+                />
+              </div>
+              {numBalances > 1 &&
+                <div className="AddressRow-balances-tokens">
+                  +{numBalances - 1} tokens
+                </div>
+              }
+            </>
+          }
         </div>
       </div>
     );

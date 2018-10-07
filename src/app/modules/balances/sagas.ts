@@ -39,12 +39,11 @@ function hydrateBalancesPerAddress(
       // uint[] memory addrBalances = new uint[](tokens.length * users.length);
       //         uint addrIdx = j + tokens.length * i;
 
+      const token = tokens[j];
       const flatIdx = j + tokens.length * i;
       const balance = new BN(result[flatIdx]);
 
-      if (!balance.isZero()) {
-        const token = tokens[j];
-
+      if (token.symbol === 'ETH' || !balance.isZero()) {
         const balanceObj = {
           symbol: token.symbol,
           address: token.address,

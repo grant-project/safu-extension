@@ -2,6 +2,7 @@ import React from 'react';
 import AddressRow from 'components/AddressRow';
 import { AddressConfig } from 'modules/addresses/types';
 import { BalanceMap } from 'modules/balances/types';
+import './AddressList.less';
 
 interface Props {
   addresses: AddressConfig[];
@@ -14,7 +15,7 @@ export default class AddressList extends React.Component<Props> {
     const { addresses, balances, onClickAddress } = this.props;
 
     return (
-      <div>
+      <div className="AddressList">
         {addresses.map(a => (
           <AddressRow
             key={a.address}
