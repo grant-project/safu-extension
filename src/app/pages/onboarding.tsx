@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
 import CreatePassword from 'components/CreatePassword';
 import Splash from 'components/Splash';
+import Restore from 'components/Restore';
 import { cryptoActions } from 'modules/crypto';
 import { AppState } from 'store/reducers';
 
@@ -21,7 +22,7 @@ enum STEP {
   SPLASH = 'SPLASH',
   PASSWORD = 'PASSWORD',
   RESTORE = 'RESTORE',
-};
+}
 
 interface State {
   step: STEP;
@@ -44,7 +45,7 @@ class OnboardingPage extends React.Component<Props, State> {
 
   render() {
     const { step } = this.state;
-    switch(step) {
+    switch (step) {
       case STEP.SPLASH:
         return (
           <Splash
@@ -55,7 +56,7 @@ class OnboardingPage extends React.Component<Props, State> {
       case STEP.PASSWORD:
         return <CreatePassword onCreatePassword={this.props.setPassword} />;
       case STEP.RESTORE:
-        return <h1>Implement restore</h1>;
+        return <Restore />;
     }
   }
 
