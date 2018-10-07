@@ -1,0 +1,39 @@
+.AddressRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 5rem;
+  padding: 0 0.75rem;
+  border-bottom: 1px solid rgba(#000, 0.08);
+
+  &-avatar {
+    position: relative;
+    margin-right: 1rem;
+
+    &-identicon {
+      height: 3rem;
+      border-radius: 100%;
+    }
+  }
+
+  &-info {
+    flex: 1;
+
+    &-label {
+      font-size: 1.2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &-address {
+      font-size: 0.9rem;
+      opacity: 0.5;
+    }
+  }
+
+  &-balances {
+    width: 5rem;
+    text-align: center;
+  }
+}

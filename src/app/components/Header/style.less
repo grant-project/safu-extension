@@ -1,0 +1,42 @@
+@header-height: 3rem;
+
+.Header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: @header-height;
+  padding: 0 1.25rem;
+  border-bottom: 1px solid rgba(#000, 0.15);
+
+  &-icon {
+    height: 1.6rem;
+  }
+
+  &-links {
+    margin-right: -0.5rem;
+
+    &-link {
+      color: #000;
+      opacity: 0.3;
+      padding: 0 0.5rem;
+      background: transparent;
+      border: none;
+      font-size: 1.2rem;
+      transition: opacity 80ms ease;
+      cursor: pointer;
+
+      &:hover {
+        color: #000;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.HeaderPlaceholder {
+  height: @header-height;
+}

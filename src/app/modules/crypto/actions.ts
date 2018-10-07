@@ -35,6 +35,10 @@ export function enterPassword(payload: string) {
   };
 }
 
+export function logout() {
+  return { type: types.LOGOUT };
+}
+
 export function setSyncedCryptoState(payload: ReturnType<typeof selectSyncedCryptoState>) {
   return {
     type: types.SET_SYNCED_CRYPTO_STATE,
