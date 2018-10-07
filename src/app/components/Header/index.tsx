@@ -34,7 +34,7 @@ class Header extends React.Component<Props, State> {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
         this.setState({ areFundsSafu: false });
-      }, 20000);
+      }, 3500);
     });
   };
 
