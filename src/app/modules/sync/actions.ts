@@ -7,3 +7,7 @@ export function startSync() {
 export function finishSync() {
   return { type: types.FINISH_SYNC };
 }
+
+export function clearData() {
+  return { type: types.CLEAR_DATA };
+}

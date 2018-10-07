@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter, RouteComponentProps } from 'react-router';
-import { Icon, Input, Form } from 'antd';
+import { Icon, Input, Form, Modal } from 'antd';
 import { cryptoActions } from 'modules/crypto';
+import { syncActions } from 'modules/sync';
 import { AppState } from 'store/reducers';
 import { decryptData, TEST_CIPHER_DATA } from 'utils/crypto';
 import './style.less';
@@ -15,6 +16,7 @@ interface StateProps {
 
 interface DispatchProps {
   enterPassword: typeof cryptoActions['enterPassword'];
+  clearData: typeof syncActions['clearData'];
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
@@ -22,12 +24,14 @@ type Props = StateProps & DispatchProps & RouteComponentProps;
 interface State {
   password: string;
   error: null | string;
+  isClearModalOpen: boolean;
 }
 
 class PasswordPage extends React.Component<Props, State> {
   state: State = {
     password: '',
     error: null,
+    isClearModalOpen: false,
   };
 
   private input: any;
@@ -39,7 +43,7 @@ class PasswordPage extends React.Component<Props, State> {
   }
 
   render() {
-    const { password, error } = this.state;
+    const { password, error, isClearModalOpen } = this.state;
   
     return (
       <div className="EnterPassword">
@@ -55,6 +59,30 @@ class PasswordPage extends React.Component<Props, State> {
               ref={el => this.input = el}
             />
           </Form.Item>
+
+          <a className="EnterPassword-clear" onClick={this.openClearModal}>
+            Forgot your password?
+          </a>
+
+          <Modal
+            title="Forgot your password?"
+            visible={isClearModalOpen}
+            okText="Clear my data"
+            cancelText="Cancel"
+            onOk={this.props.clearData}
+            onCancel={this.closeClearModal}
+            closable
+          >
+            <p>
+              Safu data is encrypted, and your password <strong>cannot be recovered</strong>.
+              If you forgot your password, you’ll have to reset your Safu extension and
+              start over.
+            </p>
+            <p>
+              This cannot be undone, so make sure you’re ready to start over before
+              clearing your data.
+            </p>
+          </Modal>
         </Form>
       </div>
     );
@@ -81,6 +109,9 @@ class PasswordPage extends React.Component<Props, State> {
       this.setState({ error: 'Password was incorrect' });
     }
   };
+
+  private openClearModal = () => this.setState({ isClearModalOpen: true });
+  private closeClearModal = () => this.setState({ isClearModalOpen: false });
 }
 
 const ConnectedPasswordPage = connect<StateProps, DispatchProps, {}, AppState>(
@@ -91,6 +122,7 @@ const ConnectedPasswordPage = connect<StateProps, DispatchProps, {}, AppState>(
   }),
   {
     enterPassword: cryptoActions.enterPassword,
+    clearData: syncActions.clearData,
   },
 )(PasswordPage);
 

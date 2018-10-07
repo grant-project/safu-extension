@@ -1,5 +1,5 @@
 import { SagaIterator, delay } from 'redux-saga';
-import { takeLatest, call, put, select, take, fork } from 'redux-saga/effects';
+import { takeLatest, takeEvery, call, put, select, take, fork } from 'redux-saga/effects';
 import {
   selectSalt,
   selectPassword,
@@ -9,6 +9,7 @@ import cryptoTypes from 'modules/crypto/types';
 import { storageSyncGet, storageSyncSet } from 'utils/sync';
 import { encryptData, decryptData, SyncConfig, syncConfigs } from 'utils/crypto';
 import { startSync, finishSync } from './actions';
+import types from './types';
 
 export function* encryptAndSync(syncConfig: SyncConfig<any>): SagaIterator {
   // Debounce by a bit in case of rapid calls
@@ -52,6 +53,11 @@ export function* sync(): SagaIterator {
   yield put(finishSync());
 }
 
+export function* clearData(): SagaIterator {
+  yield call(chrome.storage.sync.clear);
+  window.close();
+}
+
 export function* decryptSyncedData(syncConfig: SyncConfig<any>, data: any): SagaIterator {
   // Bail out if they haven't signed up yet
   const hasSetPassword = yield select(selectHasSetPassword);
@@ -75,6 +81,8 @@ export function* decryptSyncedData(syncConfig: SyncConfig<any>, data: any): Saga
 }
 
 export default function* cryptoSagas(): SagaIterator {
+  yield takeEvery(types.CLEAR_DATA, clearData);
+  
   // First fetch sync'd data and hydrate the store
   yield call(sync);
 

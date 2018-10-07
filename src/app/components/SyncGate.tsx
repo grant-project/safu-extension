@@ -1,4 +1,5 @@
 import React from 'react';
+import { Spin } from 'antd';
 import { connect } from 'react-redux';
 import { AppState } from 'store/reducers';
 
@@ -17,9 +18,9 @@ type Props = StateProps & OwnProps;
 class SyncGate extends React.Component<Props> {
   render() {
     const { hasSynced, isSyncing, children } = this.props;
-    
+
     if (isSyncing) {
-      return 'syncing...';
+      return null;
     } else if (hasSynced) {
       return children;
     } else {
