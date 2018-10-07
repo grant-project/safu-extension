@@ -10,12 +10,14 @@ import balances, {
   BalancesState,
   INITIAL_STATE as balancesInitialState,
 } from 'modules/balances';
+import rates, { RatesState, INITIAL_STATE as ratesInitialState } from 'modules/rates';
 
 export interface AppState {
   crypto: CryptoState;
   addresses: AddressesState;
   sync: SyncState;
   balances: BalancesState;
+  rates: RatesState;
 }
 
 export const combineInitialState: Partial<AppState> = {
@@ -23,6 +25,7 @@ export const combineInitialState: Partial<AppState> = {
   addresses: addressesInitialState,
   sync: syncInitialState,
   balances: balancesInitialState,
+  rates: ratesInitialState,
 };
 
 export default combineReducers<AppState>({
@@ -30,4 +33,5 @@ export default combineReducers<AppState>({
   addresses,
   sync,
   balances,
+  rates,
 });
